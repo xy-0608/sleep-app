@@ -1,0 +1,41 @@
+# OpenClaw workspace files
+.agents/
+.clawhub/
+.openclaw/
+AGENTS.md
+BOOTSTRAP.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+ark-claw-x/
+cloudflared-linux-amd64.deb
+memory/
+public-test.html
+skills/
+skills-lock.json
+*.log
+
+# Flutter
+build/
+.dart_tool/
+.pub/
+.idea/
+*.iml
+
+# iOS
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/project.xcworkspace/
+ios/Runner.xcodeproj/xcuserdata/
+*.xcuserstate
+.xcuserstate
+
+# Android
+build/
+.local.properties
+local.properties
+
+# VS Code
+.vscode/
