@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌙 Sleep App - 睡眠助眠</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 首页 -->
+    <div class="screen active" id="home-screen">
+      <nav class="navbar">
+        <span class="navbar-title">🌙 Sleep App</span>
+      </nav>
+      <div class="content">
+        <!-- 分类标签 -->
+        <div class="categories">
+          <button class="category-btn active" data-category="自然">自然</button>
+          <button class="category-btn" data-category="环境">环境</button>
+          <button class="category-btn" data-category="冥想">冥想</button>
+        </div>
+
+        <!-- 主音量控制 -->
+        <div id="master-volume" class="master-volume" style="display: none;">
+          <div class="volume-header">
+            <span>主音量</span>
+            <span id="volume-value">70%</span>
+          </div>
+          <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+          <button id="stop-all" class="stop-all-btn">停止全部</button>
+        </div>
+
+        <!-- 声音网格 -->
+        <div id="sound-grid" class="sound-grid"></div>
+      </div>
+      <footer class="bottom-nav">
+        <button class="nav-item active" data-screen="home">
+          <span>🎵</span>
+          <span>混音</span>
+        </button>
+        <button class="nav-item" data-screen="sleep">
+          <span>😴</span>
+          <span>睡眠</span>
+        </button>
+        <button class="nav-item" data-screen="stats">
+          <span>📊</span>
+          <span>统计</span>
+        </button>
+      </footer>
+    </div>
+
+    <!-- 睡眠追踪页面 -->
+    <div class="screen" id="sleep-screen">
+      <nav class="navbar">
+        <span class="navbar-title">😴 睡眠追踪</span>
+      </nav>
+      <div class="content sleep-content">
+        <div id="not-tracking">
+          <div class="sleep-icon">
+            <span>🌙</span>
+          </div>
+          <h2>准备好入睡了吗？</h2>
+          <p>开始追踪后，我们会记录你的睡眠时长，帮助你了解睡眠习惯</p>
+          <button id="start-tracking" class="primary-btn">开始睡眠</button>
+        </div>
+
+        <div id="tracking" style="display: none;">
+          <div class="pulse-animation">
+            <div class="pulse-circle"></div>
+            <div class="pulse-inner">
+              <span>😴</span>
+            </div>
+          </div>
+          <h2>睡眠中...</h2>
+          <div id="sleep-timer" class="sleep-timer">00:00:00</div>
+          <p id="bedtime-text"></p>
+          <div class="tracking-buttons">
+            <button id="cancel-tracking" class="text-btn">取消</button>
+            <button id="stop-tracking" class="primary-btn">起床</button>
+          </div>
+        </div>
+      </div>
+      <footer class="bottom-nav">
+        <button class="nav-item" data-screen="home">
+          <span>🎵</span>
+          <span>混音</span>
+        </button>
+        <button class="nav-item active" data-screen="sleep">
+          <span>😴</span>
+          <span>睡眠</span>
+        </button>
+        <button class="nav-item" data-screen="stats">
+          <span>📊</span>
+          <span>统计</span>
+        </button>
+      </footer>
+    </div>
+
+    <!-- 统计页面 -->
+    <div class="screen" id="stats-screen">
+      <nav class="navbar">
+        <span class="navbar-title">📊 睡眠统计</span>
+      </nav>
+      <div class="content" id="stats-content">
+        <div id="empty-state" class="empty-state">
+          <span>📊</span>
+          <h3>暂无睡眠记录</h3>
+          <p>开始第一次睡眠追踪后，这里会显示统计数据</p>
+        </div>
+        <div id="stats-data" style="display: none;">
+          <div class="overview-card">
+            <div class="overview-item">
+              <span>🕒</span>
+              <div>
+                <div id="avg-sleep" class="overview-value">--</div>
+                <div class="overview-label">平均睡眠</div>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span>⭐</span>
+              <div>
+                <div id="avg-quality" class="overview-value">--</div>
+                <div class="overview-label">平均质量</div>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span>📅</span>
+              <div>
+                <div id="total-days" class="overview-value">--</div>
+                <div class="overview-label">记录天数</div>
+              </div>
+            </div>
+          </div>
+          <h3 style="margin: 24px 0 16px;">最近记录</h3>
+          <div id="records-list" class="records-list"></div>
+        </div>
+      </div>
+      <footer class="bottom-nav">
+        <button class="nav-item" data-screen="home">
+          <span>🎵</span>
+          <span>混音</span>
+        </button>
+        <button class="nav-item" data-screen="sleep">
+          <span>😴</span>
+          <span>睡眠</span>
+        </button>
+        <button class="nav-item active" data-screen="stats">
+          <span>📊</span>
+          <span>统计</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- 质量评分弹窗 -->
+  <div id="quality-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>睡眠质量如何？</h3>
+      <p>给昨晚的睡眠打个分吧（1-5）</p>
+      <div class="stars">
+        <button class="star-btn" data-quality="1">⭐</button>
+        <button class="star-btn" data-quality="2">⭐</button>
+        <button class="star-btn" data-quality="3">⭐</button>
+        <button class="star-btn" data-quality="4">⭐</button>
+        <button class="star-btn" data-quality="5">⭐</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build IPA
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build IPA
+        run: |
+          flutter build ipa --release --no-pub --export-options-plist=ios/ExportOptions.plist
+      
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sleep-app-ipa
+          path: build/ios/ipa/*.ipa
